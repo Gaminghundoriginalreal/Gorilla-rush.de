@@ -70,11 +70,23 @@
             animation: fadeInUp 1.5s ease;
         }
         #datenschutz, #haftungsausschuss {
-            animation: fadeInUp 1s ease;
             margin: 20px;
             padding: 20px;
             background-color: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
+            animation: fadeSectionIn 0.5s ease;
+            display: none;
+        }
+        @keyframes fadeSectionIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeSectionOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        .fadeOut {
+            animation: fadeSectionOut 0.5s ease;
         }
     </style>
 </head>
@@ -82,7 +94,7 @@
 
 <header>
     <div style="border-bottom: 2px solid white; padding: 5px 0;"></div>
-    <h1>Willkommen bei Gorilla Rush!</h1>
+    <h1>Willkommen auf der offiziellen Gorilla Rush Webseite!</h1>
 </header>
 
 <main>
@@ -92,8 +104,8 @@
         <a href="https://mc-host24.de/donate/gorilla-rush" target="_blank" class="button">Spenden</a>
     </div>
     <p>
-        <button class="button" onclick="toggleDatenschutz()">Datenschutzrichtlinie anzeigen</button>
-        <button class="button" onclick="toggleHaftungsausschuss()">Haftungsausschuss anzeigen</button>
+        <button class="button" onclick="toggleSection('datenschutz')">Datenschutzrichtlinie anzeigen</button>
+        <button class="button" onclick="toggleSection('haftungsausschuss')">Haftungsausschluss anzeigen</button>
     </p>
 </main>
 
@@ -101,7 +113,7 @@
     <p>&copy; 2024 Gorilla Rush. Alle Rechte vorbehalten.</p>
 </footer>
 
-<section id="datenschutz" style="display: none;">
+<section id="datenschutz">
     <h2>Datenschutzrichtlinie</h2>
     <p>Vielen Dank, dass Sie Gorilla Rush spielen! Der Schutz Ihrer Daten ist uns wichtig. In dieser Datenschutzrichtlinie erklären wir, welche Daten wir erfassen, wie wir sie verwenden und welche Rechte Sie haben.</p>
     <h3>Erfassung und Nutzung von Daten</h3>
@@ -122,7 +134,7 @@
     <p>Diese Richtlinie kann von Zeit zu Zeit aktualisiert werden. Wir empfehlen Ihnen, sie regelmäßig zu überprüfen.</p>
 </section>
 
-<section id="haftungsausschuss" style="display: none;">
+<section id="haftungsausschuss">
     <h2>Haftungsausschluss</h2>
     <p>Das Spiel Gorilla Rush enthält flackernde Lichter und andere visuelle Effekte, die bei empfindlichen Personen gesundheitliche Probleme, einschließlich epileptischer Anfälle, auslösen können. Wenn Sie sich unwohl fühlen, beenden Sie das Spiel sofort und konsultieren Sie einen Arzt.</p>
     <h3>Hinweis</h3>
@@ -130,14 +142,15 @@
 </section>
 
 <script>
-    function toggleDatenschutz() {
-        const datenschutzSection = document.getElementById('datenschutz');
-        datenschutzSection.style.display = datenschutzSection.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function toggleHaftungsausschuss() {
-        const haftungsausschussSection = document.getElementById('haftungsausschuss');
-        haftungsausschussSection.style.display = haftungsausschussSection.style.display === 'none' ? 'block' : 'none';
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section.style.display === 'none' || section.style.display === '') {
+            section.classList.remove('fadeOut');
+            section.style.display = 'block';
+        } else {
+            section.classList.add('fadeOut');
+            setTimeout(() => { section.style.display = 'none'; }, 500);
+        }
     }
 </script>
 
